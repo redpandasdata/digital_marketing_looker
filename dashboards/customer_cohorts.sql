@@ -1,8 +1,9 @@
 -- Analyser la rétention et la valeur client dans le temps.
 -- Chauqe ligne représente un client dans une cohorte d'inscription
 
-CREATE VIEW 
-WITH customers AS(
+CREATE OR REPLACE VIEW `digital-marketing-campaigns.marketing.view_customer_cohorts` AS
+
+WITH customers_table AS(
     SELECT
         customer_id,
         signup_date,
@@ -13,7 +14,7 @@ WITH customers AS(
     FROM `digital-marketing-campaigns.marketing.customers`
 ),
 
-sessions AS(
+sessions_table AS(
     SELECT
         customer_id,
         COUNT(session_id) as total_sessions,
@@ -23,7 +24,7 @@ sessions AS(
     GROUP BY customer_id
 ),
 
-orders AS(
+orders_table AS(
     SELECT
         customer_id,
         COUNT(order_id) as total_orders,
@@ -32,7 +33,7 @@ orders AS(
     GROUP BY customer_id
 ),
 
-revenue AS(
+revenue_table AS(
     SELECT
         customer_id,
         SUM(quantity * unit_price) as revenue
@@ -56,9 +57,10 @@ SELECT
     COALESCE(revenue, 0) as revenue,
     DATE_DIFF(first_order_date, signup_date, DAY) as days_first_purchase,
     DATE_DIFF(CURRENT_DATE(), signup_date, MONTH) as months_since_signup
-FROM customers c
-LEFT JOIN sessions ON c.customer_id = sessions.customer_id
-LEFT JOIN orders ON c.customer_id = orders.customer_id
-LEFT JOIN revenue ON c.customer_id = revenue.customer_id
-ORDER BY signup_date;
+FROM customers_table c
+LEFT JOIN sessions_table ON c.customer_id = sessions_table.customer_id
+LEFT JOIN orders_table ON c.customer_id = orders_table.customer_id
+LEFT JOIN revenue_table ON c.customer_id = revenue_table.customer_id
+ORDER BY signup_date
+;
     

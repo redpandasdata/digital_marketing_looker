@@ -1,5 +1,7 @@
 -- Table pour Looker Studio : Dashboard performance de campagnes
 
+CREATE OR REPLACE VIEW `digital-marketing-campaigns.marketing.view_daily_campaigns_perf` AS
+
 WITH sessions AS (
     SELECT
         ws.session_date AS date,
