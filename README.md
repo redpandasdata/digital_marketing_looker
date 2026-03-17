@@ -55,6 +55,7 @@ These views are built using SQL transformations and follow best practices:
 ### 3. SQL Analytics
 
 The project includes a collection of SQL queries organized by topic and difficulty:
+```
 queries/
 ├── 01_acquisition
 ├── 02_conversion_funnel
@@ -64,6 +65,7 @@ queries/
 ├── 06_campaign_performance
 ├── 07_product_analysis
 └── 08_advanced_segmentation
+```
 
 These queries cover:
 
@@ -124,7 +126,10 @@ This project aims to demonstrate the ability to:
 
 ## 📌 How to Use This Project
 
-1. Generate the dataset using the Python script  (terminal : python run gen_data_script.py)
+1. Generate the dataset using the Python script 
+```bash 
+ python run gen_data_script.py
+ ```
 2. Upload data to BigQuery  
 3. Run SQL queries to create analytical views  
 4. Connect views to Looker Studio  
